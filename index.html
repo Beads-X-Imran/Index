@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#503a7a">
+<title>Beads by Imran</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3eef8;--panel:#fff;--ink:#2b2140;--sub:#6e6285;--violet:#5e3d8c;--vd:#472c6c;--head:#503a7a;--line:#e3d9ee;--tint:#efe7f8;--danger:#b5495b;--on:#fff;color-scheme:light dark}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#1c1626;--panel:#251d33;--ink:#efe9f7;--sub:#b3a6c7;--violet:#b79ce0;--vd:#a98ad6;--head:#33264d;--line:#3a2f4c;--tint:#33294a;--danger:#e28596;--on:#1c1626}}
+:root[data-theme=dark]{--bg:#1c1626;--panel:#251d33;--ink:#efe9f7;--sub:#b3a6c7;--violet:#b79ce0;--vd:#a98ad6;--head:#33264d;--line:#3a2f4c;--tint:#33294a;--danger:#e28596;--on:#1c1626}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-padding-top:92px;max-width:100%;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.4 Nunito,system-ui,sans-serif;padding-bottom:calc(104px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
+button,input,select{font:inherit;color:inherit}
+svg{display:block}
+:focus-visible{outline:3px solid #a58bd6;outline-offset:2px}
+.top{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:48px 1fr 48px;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) 12px 12px;background:var(--head);color:#fff;border-radius:0 0 22px 22px;box-shadow:0 6px 18px -10px rgba(40,20,70,.6)}
+.top h1{margin:0;font-size:22px;font-weight:800;text-align:center;line-height:1.15}
+.top p{margin:0;font-size:13.5px;text-align:center;opacity:.85}
+.ic{position:relative;width:44px;height:44px;border:0;background:none;color:#fff;display:grid;place-items:center;border-radius:50%;cursor:pointer}
+.ic:active{background:rgba(255,255,255,.15)}
+.ic svg{width:26px;height:26px}
+#badge{position:absolute;top:0;right:-2px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:#d4c3f2;color:#472c6c;font-size:12px;font-weight:800;display:grid;place-items:center}
+#backBtn{visibility:hidden}
+.cart #backBtn{visibility:visible}
+.wrap{max-width:520px;margin:0 auto;padding:14px 12px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+.ch{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--tint);font-size:19px;font-weight:800;color:var(--vd);line-height:1.2}
+.ch svg{width:26px;height:26px;flex:none}
+.ch small{display:block;font-size:13px;font-weight:600;color:var(--sub)}
+.cb{padding:14px}
+.og h3,.lb{display:block;margin:0 0 8px;font-size:14px;font-weight:700;color:var(--sub)}
+.cb.sgb{padding:12px}
+.sg{display:grid;gap:8px;grid-template-columns:minmax(0,1fr)}
+.sg[data-n="2"]{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+.sg[data-n="3"]{grid-template-columns:minmax(0,1.05fr) minmax(0,1.05fr) minmax(0,.9fr)}
+.sg[data-n="4"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.sg .og{min-width:0}
+.sg .lb{margin:0 0 4px;font-size:12px;letter-spacing:.2px}
+.dd{position:relative;display:block;width:100%;min-height:44px;padding:6px 24px 6px 10px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-weight:700;font-size:14.5px;text-align:left;cursor:pointer}
+.dd .v{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dd::after{content:"";position:absolute;right:11px;top:50%;width:7px;height:7px;border:solid var(--vd);border-width:0 2.2px 2.2px 0;transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.dd[aria-expanded=true]{border-color:var(--violet)}
+body.lock{overflow:hidden}
+.mask{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(20,10,35,.55)}
+.mask.mid{z-index:60;align-items:center;padding:20px}
+.shbox,.dbox{width:100%;background:var(--panel);color:var(--ink);box-shadow:0 -10px 30px -12px rgba(0,0,0,.45);animation:up .18s ease-out}
+@keyframes up{from{transform:translateY(20px);opacity:0}}
+.shbox{max-width:520px;display:flex;flex-direction:column;max-height:min(78%,560px);padding:14px 14px calc(10px + env(safe-area-inset-bottom,0px));border-radius:20px 20px 0 0}
+.shh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;font-size:18px;font-weight:800;color:var(--vd)}
+.shx{flex:none;width:38px;height:38px;border:0;border-radius:50%;background:var(--tint);color:var(--vd);font-size:24px;font-weight:800;line-height:1;cursor:pointer}
+.shbox .txt{flex:none;min-height:46px;margin-bottom:8px}
+.shl{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--line);border-radius:12px}
+.shl .empty{padding:16px 8px;margin:0}
+.opt{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:50px;padding:8px 14px;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;font-weight:700;font-size:16px;cursor:pointer}
+.opt:last-child{border-bottom:0}
+.opt[aria-selected=true]{background:var(--tint);color:var(--vd)}
+.opt[aria-selected=true]::after{content:"";flex:none;width:6px;height:11px;border:solid var(--vd);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.dbox{max-width:360px;padding:18px 16px 10px;border-radius:20px}
+.dbox h2{margin:0 0 6px;font-size:19px;font-weight:800;color:var(--vd)}
+.dbox p{margin:0 0 14px;color:var(--sub);font-size:15px}
+.dbox .main{width:100%;flex:none}
+.dbox .ghost{margin-top:8px}
+.lnk{display:block;width:100%;min-height:44px;margin-top:4px;border:0;background:none;color:var(--sub);font-weight:800;cursor:pointer}
+@media(prefers-reduced-motion:reduce){.shbox,.dbox{animation:none}}
+.chip{min-height:42px;padding:6px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--panel);font-weight:700;font-size:15px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--violet);border-color:var(--violet);color:var(--on)}
+.txt{width:100%;min-height:48px;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);font-size:16px}
+.find{width:calc(100% - 28px);margin:6px 14px 4px}
+.offer{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;padding:12px 16px;border:0;border-radius:18px;background:#4a2a6b;color:#fff;text-align:left;cursor:pointer}
+.offer small{display:inline-block;padding:2px 10px;border-radius:99px;background:rgba(255,255,255,.14);color:#ffe3a0;font-weight:700;font-size:12.5px}
+.offer b{display:block;margin-top:4px;font:italic 800 22px/1.1 Georgia,serif}
+.pr{flex:none;padding:7px 12px;border-radius:14px;background:#f6c65b;color:#4a2a6b;text-align:center;line-height:1.05;font-weight:800;font-size:13px}
+.pr b{margin:0;font:800 20px/1.1 Georgia,serif;white-space:nowrap}
+.edit{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 8px 8px 14px;margin-bottom:12px;border:1.5px solid var(--violet);border-radius:14px;background:var(--tint);font-weight:700}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 14px 6px}
+.sa{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;cursor:pointer}
+.pill{padding:9px 14px;border-radius:12px;background:var(--tint);color:var(--vd);font-weight:800;font-size:15px;white-space:nowrap}
+input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;width:24px;height:24px;margin:0;border:2.5px solid var(--vd);border-radius:7px;background:var(--panel) center/16px no-repeat;cursor:pointer}
+input[type=checkbox]:checked{background-color:var(--vd);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.3 3.3L13 4.8' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+input[type=checkbox]:indeterminate{background-color:var(--vd);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8h9' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E")}
+.tile input[type=checkbox]{width:20px;height:20px;border-width:2px;border-radius:6px;background-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px 8px 10px}
+.tile{display:flex;flex-direction:column;gap:4px;min-width:0;padding:5px 6px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg)}
+.tile.on{border-color:var(--violet);background:var(--tint)}
+.tile.bad,.tile.bad .q{border-color:var(--danger)}
+.pick{display:flex;align-items:center;gap:5px;min-width:0;min-height:30px;cursor:pointer}
+.nm{min-width:0;font-weight:700;font-size:13px;line-height:1.1;overflow-wrap:anywhere}
+.bead{position:relative;flex:none;width:22px;height:22px;border-radius:50%;background:var(--c);background:radial-gradient(circle at 32% 28%,color-mix(in srgb,var(--c) 45%,#fff),var(--c) 55%,color-mix(in srgb,var(--c) 72%,#000));box-shadow:0 2px 4px rgba(0,0,0,.25)}
+.bead::after{content:"";position:absolute;left:22%;top:18%;width:26%;height:20%;border-radius:50%;background:rgba(255,255,255,.7);transform:rotate(-30deg)}
+.bead.irid{background:conic-gradient(from 30deg,#f5a3c0,#ffd98a,#a6e3c4,#9cc9f5,#cba6f0,#f5a3c0)}
+.bead.sm{width:26px;height:26px}
+.q{width:100%;min-height:32px;padding:2px 8px;border:1.5px solid var(--line);border-radius:9px;background:var(--panel);font-size:16px;font-weight:800;text-align:center;-moz-appearance:textfield}
+.q::-webkit-inner-spin-button,.q::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.tile.on .q{border-color:var(--violet)}
+@media(min-width:460px){.tile{flex-direction:row;align-items:center;padding:5px 8px}.pick{flex:1}.q{width:72px}}
+.grp+.grp{margin-top:12px}
+.gh{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;padding:8px 12px;border-radius:10px;background:var(--tint);color:var(--vd);font-size:14px}
+.gh span{font-size:17px;font-weight:800;color:var(--ink)}
+.it{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--line)}
+.it:last-child{border-bottom:0}
+.inf{flex:1;min-width:0;display:flex;flex-direction:column}
+.inf strong{overflow-wrap:anywhere}
+.inf span{color:var(--sub);font-weight:700;font-size:14.5px}
+.acts{display:flex;gap:2px;flex:none}
+.ac{min-height:40px;padding:0 10px;border:0;background:none;font-weight:800;font-size:14px;cursor:pointer}
+.ac.e{color:var(--violet)}.ac.d{color:var(--danger)}
+.empty{margin:4px 0 12px;text-align:center;color:var(--sub)}
+#goShop{display:block;margin:0 auto}
+.ghost{width:100%;min-height:50px;border:1.5px solid var(--line);border-radius:14px;background:var(--panel);color:var(--vd);font-weight:800;cursor:pointer}
+.ghost:disabled{opacity:.5}
+.note{margin:10px 4px;text-align:center;color:var(--sub);font-size:13px}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;align-items:center;gap:12px;width:min(100%,520px);margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:var(--tint);border-radius:20px 20px 0 0;box-shadow:0 -8px 24px -14px rgba(40,20,70,.5)}
+body:not(.cart) #shopDock,body.cart #cartDock{display:flex}
+.calc{width:34px;height:34px;flex:none;color:var(--vd)}
+.dk{display:flex;flex-direction:column;font-size:13.5px;font-weight:700;color:var(--sub);line-height:1.1}
+.dk b{font-size:26px;font-weight:800;color:var(--ink)}
+.main{flex:1;min-height:54px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 14px;border:0;border-radius:14px;background:var(--violet);color:var(--on);font-weight:800;font-size:17px;cursor:pointer}
+.main svg{width:24px;height:24px}
+.main:disabled{opacity:.5}
+#toast{position:fixed;left:50%;bottom:calc(112px + env(safe-area-inset-bottom,0px));z-index:40;max-width:min(92vw,440px);padding:11px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:700;font-size:15px;text-align:center;opacity:0;pointer-events:none;transform:translate(-50%,10px);transition:.2s}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){#toast{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="ic" id="backBtn" aria-label="Back to items"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <div><h1>Beads by Imran</h1><p>Wholesale Beads</p></div>
+  <button class="ic" id="cartBtn" aria-label="Open cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h3l2.4 11.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21 7H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/></svg><span id="badge" hidden>0</span></button>
+</header>
+
+<main class="wrap">
+  <section id="shopView">
+    <button class="offer" id="offer" type="button"><span><small>✦ Khaas offer</small><b>Nakhun Sitara</b></span><span class="pr">Sirf<br><b>Rs. 1100</b></span></button>
+    <div class="edit" id="editBar" hidden><span>Item edit ho raha hai</span><button class="chip" id="cancelBtn" type="button">Edit cancel karein</button></div>
+
+    <div class="card">
+      <div class="ch">Item chunein</div>
+      <div class="cb sgb"><div class="sg" id="sg" data-n="3">
+        <div class="og" id="catGrp"><label class="lb" id="catLabel" for="catBtn">Category</label><button type="button" class="dd" id="catBtn" aria-haspopup="listbox" aria-expanded="false"><span class="v"></span></button></div>
+        <div class="og" id="sizeGrp"><label class="lb" id="sizeLabel" for="sizeBtn">Size</label><button type="button" class="dd" id="sizeBtn" aria-haspopup="listbox" aria-expanded="false"><span class="v"></span></button><input class="txt" id="sizeInput" type="text" placeholder="Size likhein" hidden></div>
+        <div class="og" id="shapeGrp" hidden><label class="lb" id="shapeLabel" for="shapeBtn">Shape</label><button type="button" class="dd" id="shapeBtn" aria-haspopup="listbox" aria-expanded="false"><span class="v"></span></button></div>
+        <div class="og" id="finishGrp" hidden><label class="lb" id="finishLabel" for="finishBtn">Finish</label><button type="button" class="dd" id="finishBtn" aria-haspopup="listbox" aria-expanded="false"><span class="v"></span></button></div>
+        <div class="og" id="unitGrp" hidden><label class="lb" id="unitLabel" for="unitBtn">Unit</label><button type="button" class="dd" id="unitBtn" aria-haspopup="listbox" aria-expanded="false"><span class="v"></span></button></div>
+      </div></div>
+    </div>
+
+    <div class="card" id="colorsCard">
+      <div class="ch"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20c1.4 0 2-1 2-1.8 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1 .8-1.8 1.8-1.8H17a5 5 0 0 0 5-5C22 5.6 17.5 2 12 2z"/><circle cx="7.5" cy="11" r="1.5" fill="var(--tint)"/><circle cx="10.5" cy="7" r="1.5" fill="var(--tint)"/><circle cx="15.5" cy="7.5" r="1.5" fill="var(--tint)"/></svg><div>Colors &amp; Quantity<small id="ctx"></small></div></div>
+      <div class="bar"><label class="sa"><input type="checkbox" id="selAll">Select All</label><span class="pill">Total Quantity: <span id="tot">0</span></span></div>
+      <input class="txt find" id="colorFind" type="search" placeholder="Color dhoondein" autocomplete="off" hidden>
+      <div class="grid" id="colorGrid"></div>
+    </div>
+  </section>
+
+  <section id="cartView" hidden>
+    <div class="card"><div class="cb"><label class="lb" for="custName">Aapka naam</label><input class="txt" id="custName" type="text" placeholder="Naam likhein" autocomplete="name"></div></div>
+    <div class="card">
+      <div class="ch">Order list<span class="pill" id="totalCount" style="margin-left:auto">0 items</span></div>
+      <div class="cb" id="orderList"></div>
+    </div>
+    <button class="ghost" id="copyBtn" disabled>Copy order text</button>
+    <p class="note" id="copyNote">Agar WhatsApp na khule to yeh button dabakar order text copy karein aur khud WhatsApp mein paste karke bhej dein</p>
+  </section>
+</main>
+
+<footer class="dock" id="shopDock">
+  <svg class="calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="2.5" width="16" height="19" rx="3"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01" stroke-width="2.6"/></svg>
+  <div class="dk">Total Quantity<b id="dockTot">0</b></div>
+  <button class="main" id="addBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h3l2.4 11.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21 7H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/></svg><span id="addTxt">Add to Cart</span></button>
+</footer>
+<footer class="dock" id="cartDock">
+  <div class="dk">Total Items<b id="dockItems">0</b></div>
+  <button class="main" id="submitBtn" disabled>Send order on WhatsApp</button>
+</footer>
+<div class="mask" id="sheet" hidden>
+  <div class="shbox" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+    <div class="shh"><span id="shTitle">Chunein</span><button type="button" class="shx" id="shClose" aria-label="Band karein">&times;</button></div>
+    <input class="txt" id="shFind" type="search" placeholder="Dhoondein" autocomplete="off" hidden>
+    <div class="shl" id="shList" role="listbox"></div>
+  </div>
+</div>
+<div class="mask mid" id="dlg" hidden>
+  <div class="dbox" role="alertdialog" aria-modal="true" aria-labelledby="dlgT" aria-describedby="dlgM">
+    <h2 id="dlgT">Cart mein add nahi hua</h2>
+    <p id="dlgM"></p>
+    <button type="button" class="main" id="dlgAdd">Add to Cart karein</button>
+    <button type="button" class="ghost" id="dlgSkip">Bina add kiye aage barhein</button>
+    <button type="button" class="lnk" id="dlgBack">Wapas jayen</button>
+  </div>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const WHATSAPP_NUMBER = "923212421990";
+
+const CATEGORY_DATA = {
+  CRYSTAL: {
+    size: ["4mm","3mm","6mm","8mm","10mm","4x6","5x7","8x11","4x8","6x12","8x16"],
+    color: ["White","Black","Black para","Hopo","Golden","peach","Light falsa","Falsa","Zinc","Gray","Coffee","Mehroon","pink","Anari","Red","Pista","tota","Orange","Yellow","Laddo","Aqua","J.green","C Green","Dye Atashi","LC","Dye Ice 7","Dye ice 8","Dye Purple 7","Dye Purple 8","Dye Purple 9","Dye Peridoth","Dye Gajri","Purple","Dye Pink","Camel","Dye Orange","Blue","Honey","Plating kainet","Plating Chandi","Plating Sona","Plating Copper","C Frozi","Band dark Ruby","Band Emerald","Band Pista","Band Gray","Band Falsa","Band Froza","Band Lc","Band Opal","Band Silky","Band Pink","Band C green","Taar Bhindi","Taar Ruby"],
+    finish: ["","Ab","Plain"],
+    defQty: 100
+  },
+  BICON: {
+    noSize: true,
+    color: ["Black","White","Red","Anari","Mehroon","Golden","Peach","Blue","Green","Aqua","Orange","Yellow"],
+    noFinish: true
+  },
+  POD: {
+    size: ["6/0","8/0","12/0"],
+    color: ["Black","Light Fone","Golden Fone","White","Copper Metal","kainet","black kajal","Blue","J green","Silver Chandi","Golden Chandi","Peach","Pink","Mehroon","Anari","Marjan","Froza","Opal","Tota","Falsa","Cofee","Orange","Dye Atashi","Dye ice","Dye Purple 7","Dye Purple 9","Camel","Silki"],
+    finish: ["","Plain","Luster","Ab","Opaque"]
+  },
+  NALKI: { size: ["3\"'"], color: ["Black","Golden Chandi","Silver Chandi","Copper Metal"] },
+  "CUT DANA": { size: ["11/0"], color: ["Black","Golden Chandi","Silver Chandi","Copper Metal"] },
+  SITARA: {
+    sizeShapeLabel: "Size and Shape",
+    sizeShape: ["3mm","4mm","5mm","6mm","8mm","Nakhun Sitara","Kashti Sitara"],
+    finish: ["","Plain","Flat","Glitter","Katori"],
+    color: ["Golden","Silver","Peach","Banarsi","Black","Tiger","Rainbow"],
+    unit: ["Kg","Gm"],
+    decimalQty: true
+  },
+  SHELLPEARL: {
+    size: ["2mm","3mm","4mm","5mm","6mm","8mm","10mm","4x6","5x7","6x9","8x11"],
+    color: ["Cream","Black","Lc","White"],
+    noFinish: true,
+    unit: ["Packet","Line","Kg"]
+  },
+  MARBLE: {
+    size: ["8mm","10mm","8X11"],
+    color: ["Mehroon","Peach","Pink","White","Zinc","Ice","Gray","asmani","J green","Black","Orange","Atashi","Dye purple 7"],
+    noFinish: true
+  },
+  "PLASTIC BEADS": {
+    sizeShapeLabel: "Size and Shape",
+    sizeShape: ["3mm pearl","4mm pearl","5mm pearl","6mm pearl","8mm pearl","10mm pearl","3x6","4x6","6x9","Ring Chakri","Bori Ring","Choora Katori","Gota","Dhaga"],
+    color: ["Cream","Camel","Opal","White","Met","Golden","Silver"],
+    noFinish: true,
+    unit: ["Kg","Gm"],
+    decimalQty: true
+  },
+  "BNA HUA MOGRA": {
+    noSize: true,
+    unit: ["Kg","Gm"],
+    color: ["LC","White","Anari","Mehroon","Red","Pink","Orange","Black","Pista","Atashi","J green","Ruby","emereld","Band pink","3mm Shelpar","4mm Shelpar"]
+  },
+  QANCHA: { size: ["3mm","4mm","6mm","8mm","10mm"], color: ["Golden","White"] },
+  "MOGRA TAAR": { noSize: true, color: ["Silver","Golden"] },
+  "TIKKI STONE & ARTICLES": {
+    sizeShape: ["3mm Tikki","4mm Tikki","6mm Tikki","8mm Tikki","38# Button","13x18 Button","5x10 Gilli","6x12 Gilli","8x13 Badam","13x18 Badam","6mm Flower","8mm Flower","10mm Flower"],
+    color: ["Lc","White","Ab","Sattan"],
+    finish: ["","Plain","Ab","Hole","Clip wala"]
+  }
+};
+const CATEGORIES = Object.keys(CATEGORY_DATA);
+
+const $ = (id) => document.getElementById(id), grid = $("colorGrid");
+const esc = (t) => String(t).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
+const cap = (s) => s.trim().replace(/^./, (c) => c.toUpperCase());
+const fmtCat = (s) => s.toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase());
+const num = (n) => Math.round(n * 100) / 100;
+Object.values(CATEGORY_DATA).forEach((d) => { if (d.color) d.color = d.color.map(cap); });
+
+// Bead swatch colours (first match wins)
+const SW = [["black|kajal","#1c1b22"],["hopo","#d9d5df"],["white|shelpar","#f2f0f5"],["ruby","#a0122a"],["emer","#0f7a4a"],["mehroon","#6b1230"],["anari","#b3112b"],["gajri","#e0207f"],["light falsa","#b7a0d2"],["falsa","#7d5aa6"],["pista","#a8d37a"],["tota","#5fbf45"],["j\\.?\\s?green","#0f7d70"],["c\\.?\\s?green","#2f9e5a"],["bhindi","#4e8f3a"],["green","#1d8f4e"],["aqua","#3fc1c9"],["asmani","#8ec9ee"],["ice","#a9d3ea"],["purple","#7b3fb0"],["peridoth","#9fd04b"],["atashi","#f08a1c"],["orange","#ef7d12"],["yellow","#f2d02c"],["laddo","#f0b229"],["honey","#e29a12"],["golden|sona|tiger","#d6a437"],["copper","#b4693c"],["silver|chandi|met","#c3c6cf"],["kainet","#aab0be"],["cof+ee","#5a3320"],["camel","#b9895b"],["peach","#f4b99a"],["pink","#f06aa8"],["blue","#1f5fd1"],["gray","#8b8f99"],["zinc","#7b8087"],["fone","#d9cdb4"],["marjan","#e2574c"],["fro[zs]","#35c4b4"],["opal","#e8e2ee"],["silk","#dccfe4"],["lc|cream","#ecdfc6"],["banarsi","#a4275e"],["sattan","#d9d0e3"],["red","#d6162d"]].map(([r, c]) => [new RegExp(r, "i"), c]);
+const bead = (n, cls) => `<i class="bead ${/^(ab|rainbow)$/i.test(n) ? "irid" : ""} ${cls || ""}" style="--c:${(SW.find(([r]) => r.test(n)) || [0, "#b9a7d6"])[1]}"></i>`;
+
+let order = [], editIndex = null, cat, size = "", shape = "", finish = "", unit = "", tt;
+const D = () => CATEGORY_DATA[cat], SL = (d) => d.sizeShape || d.size || null;
+const hasFinish = (d) => d.finish && !d.noFinish;
+const curSize = () => { const d = D(); return d.noSize ? "" : SL(d) ? size : $("sizeInput").value.trim(); };
+const tick = (el) => el.querySelector("[type=checkbox]");
+
+function toast(m) {
+  const t = $("toast");
+  t.textContent = m; t.classList.add("show");
+  clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 2600);
+}
+
+// Searchable dropdown: har dropdown ek button hai, tap karne par neeche se list (search ke saath) khulti hai
+const lab = (h, v) => (h._o.fmt ? h._o.fmt(v) : v);
+function paint(h) {
+  const o = h._o;
+  h.firstElementChild.textContent = o.list.includes(o.cur) ? lab(h, o.cur) : "Chunein";
+}
+function pick(host, list, cur, fn, fmt) {
+  host._o = { list, cur, fn, fmt };
+  paint(host);
+}
+
+const sheet = $("sheet"), shList = $("shList"), shFind = $("shFind"), dlg = $("dlg"), vv = window.visualViewport;
+let shHost = null, dlgGo = null;
+
+// Keyboard khulne par sheet visible hisse ke andar rahe
+function fitSheet() {
+  if (vv && shHost) { sheet.style.top = vv.offsetTop + "px"; sheet.style.height = vv.height + "px"; }
+}
+if (vv) { vv.addEventListener("resize", fitSheet); vv.addEventListener("scroll", fitSheet); }
+
+function paintOpts() {
+  const o = shHost._o, q = shFind.value.trim().toLowerCase();
+  const rows = o.list.filter((v) => !q || String(lab(shHost, v)).toLowerCase().includes(q));
+  shList.innerHTML = rows.length
+    ? rows.map((v) => `<button type="button" class="opt" role="option" aria-selected="${v === o.cur}" data-v="${esc(v)}">${esc(lab(shHost, v))}</button>`).join("")
+    : '<p class="empty">Kuch nahi mila</p>';
+}
+function openSheet(h) {
+  shHost = h; h.setAttribute("aria-expanded", "true");
+  $("shTitle").textContent = $(h.id.replace("Btn", "Label")).textContent;
+  shFind.value = ""; shFind.hidden = h._o.list.length < 7;
+  paintOpts();
+  sheet.hidden = false; document.body.classList.add("lock"); fitSheet();
+  const cur = shList.querySelector('[aria-selected="true"]');
+  if (cur) shList.scrollTop = cur.offsetTop - (shList.clientHeight - cur.offsetHeight) / 2;
+  if (!shFind.hidden && matchMedia("(hover:hover)").matches) shFind.focus({ preventScroll: true });
+  else (cur || shList.firstElementChild)?.focus({ preventScroll: true });
+}
+function closeSheet() {
+  if (!shHost) return;
+  const h = shHost; shHost = null;
+  sheet.hidden = true; sheet.style.top = sheet.style.height = "";
+  document.body.classList.remove("lock");
+  h.setAttribute("aria-expanded", "false");
+  h.focus({ preventScroll: true });
+}
+function closeDlg() { dlg.hidden = true; dlgGo = null; document.body.classList.remove("lock"); }
+
+// Colors tick hain lekin cart mein add nahi hue -> category/size badalne se pehle poochta hai
+function guard(what, go) {
+  let n = 0;
+  [...grid.children].forEach((el) => { if (tick(el).checked) n++; });
+  if (!n) return go(false);
+  $("dlgM").textContent = `${n} color${n > 1 ? "s" : ""} select hain (Total Qty: ${$("tot").textContent}${D().unit ? " " + unit : ""}) jo abhi cart mein add nahi hue. ${what} badalne par yeh select kiye hue colors hat jayenge.`;
+  $("dlgAdd").textContent = editIndex === null ? "Add to Cart karein" : "Save changes karein";
+  dlgGo = go; dlg.hidden = false; document.body.classList.add("lock");
+  $("dlgAdd").focus({ preventScroll: true });
+}
+function choose(h, v) {
+  closeSheet();
+  if (v === h._o.cur) return;
+  const move = (clear) => {
+    h._o.cur = v; paint(h); h._o.fn(v);
+    if (clear && h.id === "sizeBtn") renderColors();
+  };
+  if (h.id === "catBtn") guard("Category", move);
+  else if (h.id === "sizeBtn") guard("Size", move);
+  else move(false);
+}
+
+$("sg").onclick = (e) => { const b = e.target.closest(".dd"); if (b) openSheet(b); };
+shList.onclick = (e) => { const b = e.target.closest(".opt"); if (b) choose(shHost, b.dataset.v); };
+sheet.onclick = (e) => { if (e.target === sheet) closeSheet(); };
+$("shClose").onclick = closeSheet;
+shFind.oninput = paintOpts;
+shFind.onkeydown = (e) => {
+  if (e.key !== "Enter") return;
+  e.preventDefault();
+  const f = shList.querySelector(".opt");
+  if (f) f.click();
+};
+$("dlgAdd").onclick = () => { const g = dlgGo; closeDlg(); if (addToCart()) g(false); };
+$("dlgSkip").onclick = () => { const g = dlgGo; closeDlg(); g(true); };
+$("dlgBack").onclick = closeDlg;
+dlg.onclick = (e) => { if (e.target === dlg) closeDlg(); };
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if (!dlg.hidden) closeDlg(); else closeSheet();
+});
+
+function setCat(c, sz) {
+  cat = c;
+  const d = D(), sl = SL(d);
+  size = sz || (sl ? sl[0] : "");
+  shape = d.shape ? d.shape[0] : "";
+  finish = hasFinish(d) ? d.finish[0] : "";
+  unit = d.unit ? d.unit[0] : "";
+  $("sizeInput").value = "";
+  drawAll();
+}
+function drawAll() {
+  pick($("catBtn"), CATEGORIES, cat, (v) => setCat(v), fmtCat);
+  renderOpts(); renderColors(); ctx();
+}
+function renderOpts() {
+  const d = D(), sl = SL(d), f = hasFinish(d);
+  $("sizeGrp").hidden = !!d.noSize;
+  $("sizeLabel").textContent = d.sizeShapeLabel || "Size";
+  $("sizeBtn").hidden = !sl; $("sizeInput").hidden = !!sl;
+  if (sl) pick($("sizeBtn"), sl, size, (v) => { size = v; ctx(); });
+  $("shapeGrp").hidden = !d.shape;
+  if (d.shape) pick($("shapeBtn"), d.shape, shape, (v) => { shape = v; ctx(); });
+  $("finishGrp").hidden = !f;
+  if (f) pick($("finishBtn"), d.finish, finish, (v) => { finish = v; ctx(); }, (v) => v || "None");
+  $("unitGrp").hidden = !d.unit;
+  if (d.unit) pick($("unitBtn"), d.unit, unit, (v) => { unit = v; ctx(); });
+  // Jitne dropdown dikh rahe hain, utne ek hi line mein (4 ho to 2x2)
+  const n = [...$("sg").children].filter((x) => !x.hidden).length;
+  $("sg").dataset.n = n > 3 ? 4 : n;
+}
+function ctx() {
+  const d = D();
+  $("ctx").textContent = [fmtCat(cat), curSize(), d.shape ? shape : "", hasFinish(d) ? finish : "", d.unit ? unit : ""].filter(Boolean).join(" · ");
+}
+$("sizeInput").oninput = ctx;
+
+function renderColors() {
+  const d = D(), list = d.color || [];
+  $("colorFind").value = ""; $("colorFind").hidden = list.length < 16;
+  grid.innerHTML = list.map((c) => `<div class="tile" data-n="${esc(c)}"><label class="pick"><input type="checkbox" aria-label="${esc(c)}">${bead(c)}<span class="nm">${esc(c)}</span></label><input class="q" type="number" inputmode="${d.decimalQty ? "decimal" : "numeric"}" min="0" step="${d.decimalQty ? "0.01" : "1"}" value="0" aria-label="${esc(c)} quantity"></div>`).join("");
+  sync();
+}
+function sync() {
+  let t = 0, n = 0, v = 0;
+  [...grid.children].forEach((el) => {
+    const c = tick(el).checked;
+    el.classList.toggle("on", c); el.classList.remove("bad");
+    if (c) t += +el.querySelector(".q").value || 0;
+    if (!el.hidden) { v++; if (c) n++; }
+  });
+  $("tot").textContent = $("dockTot").textContent = num(t);
+  const a = $("selAll");
+  a.checked = v > 0 && n === v; a.indeterminate = n > 0 && n < v;
+}
+
+// Category ki default quantity (jaise Crystal = 100): sirf tab bharti hai jab color tick kiya jaye aur qty 0 ho
+const defQty = (el) => {
+  const q = el.querySelector(".q"), v = D().defQty;
+  if (v && !(+q.value > 0)) q.value = v;
+};
+grid.addEventListener("change", (e) => {
+  if (e.target.type !== "checkbox") return;
+  const tile = e.target.closest(".tile");
+  if (e.target.checked) defQty(tile); else tile.querySelector(".q").value = 0;
+  sync();
+});
+grid.addEventListener("input", (e) => {
+  if (!e.target.classList.contains("q")) return;
+  if (+e.target.value > 0) tick(e.target.closest(".tile")).checked = true;
+  sync();
+});
+grid.addEventListener("focusin", (e) => {
+  if (!e.target.classList.contains("q")) return;
+  if (e.target.value === "0") e.target.value = ""; else e.target.select();
+});
+grid.addEventListener("focusout", (e) => { if (e.target.classList.contains("q") && e.target.value.trim() === "") e.target.value = 0; });
+$("selAll").onchange = (e) => {
+  [...grid.children].forEach((el) => {
+    if (el.hidden) return;
+    tick(el).checked = e.target.checked;
+    if (e.target.checked) defQty(el); else el.querySelector(".q").value = 0;
+  });
+  sync();
+};
+$("colorFind").oninput = (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  [...grid.children].forEach((el) => (el.hidden = !!q && !el.dataset.n.toLowerCase().includes(q)));
+  sync();
+};
+
+// Order ko category -> size ke hisaab se group karta hai (WhatsApp message bhi isi tarah banta hai)
+function groupOrder() {
+  const out = [];
+  [...new Set(order.map((o) => o.category))].forEach((c) => {
+    const d = CATEGORY_DATA[c] || {}, defs = SL(d), by = {};
+    order.forEach((o, i) => {
+      if (o.category !== c) return;
+      const k = o.size || o.shape || "";
+      (by[k] = by[k] || []).push(i);
+    });
+    const keys = Object.keys(by);
+    if (defs) keys.sort((a, b) => defs.indexOf(a) - defs.indexOf(b));
+    keys.forEach((k) => out.push({ cat: c, size: k, idx: by[k] }));
+  });
+  return out;
+}
+
+function renderOrderList() {
+  const el = $("orderList"), n = order.length;
+  $("badge").textContent = $("dockItems").textContent = n; $("badge").hidden = !n;
+  $("totalCount").textContent = n + (n === 1 ? " item" : " items");
+  $("submitBtn").disabled = $("copyBtn").disabled = !n;
+  if (!n) { el.innerHTML = '<p class="empty">Abhi koi item add nahi hua</p><button class="chip" id="goShop">Items chunein</button>'; return; }
+  el.innerHTML = groupOrder().map((g) => `<section class="grp"><div class="gh"><b>${esc(g.cat)}</b>${g.size ? `<span>${esc(g.size)}</span>` : ""}</div>${g.idx.map((i) => {
+    const o = order[i], p = [o.color, o.finish].filter(Boolean);
+    return `<div class="it">${o.color ? bead(o.color, "sm") : ""}<div class="inf"><strong>${esc(p.join(" · ") || "—")}</strong><span>Qty: ${o.qty}${o.unit ? " " + esc(o.unit) : ""}</span></div><div class="acts"><button class="ac e" data-i="${i}">Edit</button><button class="ac d" data-i="${i}">Remove</button></div></div>`;
+  }).join("")}</section>`).join("");
+}
+
+function openCart(on) {
+  document.body.classList.toggle("cart", on);
+  $("shopView").hidden = on; $("cartView").hidden = !on;
+  scrollTo({ top: 0 });
+}
+function setEditMode(i) {
+  editIndex = i;
+  $("editBar").hidden = i === null;
+  $("addTxt").textContent = i === null ? "Add to Cart" : "Save changes";
+}
+function startEdit(i) {
+  const o = order[i];
+  cat = o.category; size = o.size; shape = o.shape; finish = o.finish; unit = o.unit;
+  const d = D();
+  if (!d.noSize && !SL(d)) $("sizeInput").value = o.size;
+  drawAll();
+  const t = [...grid.children].find((el) => el.dataset.n === o.color);
+  if (t) { tick(t).checked = true; t.querySelector(".q").value = o.qty; }
+  sync(); setEditMode(i); openCart(false);
+  if (t) t.scrollIntoView({ block: "center", behavior: "smooth" });
+}
+
+function addToCart() {
+  const d = D(), rows = [], bad = [];
+  [...grid.children].forEach((el) => {
+    if (!tick(el).checked) return;
+    const q = parseFloat(el.querySelector(".q").value);
+    if (q > 0 && (d.decimalQty || Number.isInteger(q))) rows.push({ color: el.dataset.n, qty: q });
+    else bad.push(el);
+  });
+  if (bad.length) {
+    bad.forEach((el) => el.classList.add("bad"));
+    bad[0].scrollIntoView({ block: "center", behavior: "smooth" });
+    toast(d.decimalQty ? "Quantity likhein (0 se zyada)" : "Sirf poori quantity likhein (0 se zyada)");
+    return false;
+  }
+  if (!rows.length) { toast("Pehle kam az kam ek color tick karein"); return false; }
+  const sz = curSize(), wasEdit = editIndex !== null;
+  const items = rows.map((r) => ({
+    category: cat, size: sz, shape: d.shape ? shape : "", color: r.color,
+    finish: hasFinish(d) ? finish : "", qty: r.qty, unit: d.unit ? unit : "",
+  }));
+  if (wasEdit) order.splice(editIndex, 1, ...items); else order.push(...items);
+  setEditMode(null);
+  finish = hasFinish(d) ? d.finish[0] : "";
+  renderOpts(); renderColors(); ctx(); renderOrderList();
+  if (wasEdit) { openCart(true); toast("Changes save ho gaye"); }
+  else toast(items.length + (items.length > 1 ? " colors" : " color") + " cart mein add ho gaye");
+  return true;
+}
+$("addBtn").onclick = () => { addToCart(); };
+$("cancelBtn").onclick = () => { setEditMode(null); renderColors(); };
+
+$("orderList").onclick = (e) => {
+  if (e.target.id === "goShop") return openCart(false);
+  const b = e.target.closest("button[data-i]");
+  if (!b) return;
+  const i = Number(b.dataset.i);
+  if (b.classList.contains("e")) return startEdit(i);
+  if (editIndex !== null) { setEditMode(null); renderColors(); }
+  order.splice(i, 1);
+  renderOrderList();
+};
+
+$("cartBtn").onclick = () => openCart(true);
+$("backBtn").onclick = () => openCart(false);
+$("offer").onclick = () => guard("Category", () => { setCat("SITARA", "Nakhun Sitara"); $("colorsCard").scrollIntoView({ behavior: "smooth" }); });
+
+function buildMessage() {
+  if (!order.length) return null;
+  const custName = $("custName").value.trim();
+  if (!custName) { toast("Order bhejne se pehle apna naam likhein"); $("custName").focus(); return null; }
+  const now = new Date(),
+    today = `${String(now.getDate()).padStart(2, "0")}/${String(now.getMonth() + 1).padStart(2, "0")}/${now.getFullYear()}`;
+  let msg = `*${today}*\nNaam: ${custName}\n\n`, lastCat = "";
+  groupOrder().forEach((g) => {
+    if (g.cat !== lastCat) { msg += (lastCat ? "\n" : "") + `*${g.cat}*\n`; lastCat = g.cat; }
+    if (g.size) msg += `${g.size}\n`;
+    g.idx.forEach((i) => {
+      const o = order[i], parts = [o.color, o.finish].filter(Boolean);
+      msg += `- ${parts.length ? parts.join(", ") + ", " : ""}Qty: ${o.qty}${o.unit ? " " + o.unit : ""}\n`;
+    });
+  });
+  return msg.trim();
+}
+
+$("submitBtn").onclick = () => {
+  const msg = buildMessage();
+  if (!msg) return;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+};
+$("copyBtn").onclick = async () => {
+  const msg = buildMessage();
+  if (!msg) return;
+  try {
+    await navigator.clipboard.writeText(msg + `\n\nBhejein: wa.me/${WHATSAPP_NUMBER}`);
+    const note = $("copyNote"), old = note.textContent;
+    note.textContent = "Copy ho gaya — ab WhatsApp mein paste kar dein";
+    setTimeout(() => { note.textContent = old; }, 2500);
+  } catch (e) { toast("Copy nahi ho saka, order text manually likh lein"); }
+};
+
+setCat(CATEGORIES[0]);
+renderOrderList();
+</script>
+</body>
+</html>
